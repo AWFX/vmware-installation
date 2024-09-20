@@ -1,0 +1,15 @@
+--- /usr/src/kernels/6.8.9-300.fc40.x86_64/arch/x86/include/asm/timex.h.orig    2024-05-17 07:33:48.273655621 -0400
++++ /usr/src/kernels/6.8.9-300.fc40.x86_64/arch/x86/include/asm/timex.h.new     2024-05-17 07:35:00.393253561 -0400
+@@ -5,6 +5,12 @@
+ #include <asm/processor.h>
+ #include <asm/tsc.h>
+ 
++/*
++* Fix for vmware installer failure to build vmmon and vmnet kernel modules
++* as random_get_entropy_fallback() is not found in this unit.
++*/
++extern unsigned long random_get_entropy_fallback(void);
++
+ static inline unsigned long random_get_entropy(void)
+ {
+        if (!IS_ENABLED(CONFIG_X86_TSC) &&
